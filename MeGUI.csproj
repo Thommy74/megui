@@ -704,6 +704,10 @@
     <Compile Include="packages\muxer\mkvmerge\MkvMergeMuxer.cs" />
     <Compile Include="packages\muxer\mp4box\MP4BoxMuxer.cs" />
     <Compile Include="packages\muxer\tsmuxer\tsMuxeR.cs" />
+    <Compile Include="packages\reader\avs\AvsApi.cs" />
+    <Compile Include="packages\reader\avs\AvsLibrary.cs" />
+    <Compile Include="packages\reader\avs\AvsProbe.cs" />
+    <Compile Include="packages\reader\avs\AvsSession.cs" />
     <Compile Include="packages\reader\avs\AvsReader.cs">
       <SubType>Code</SubType>
     </Compile>
