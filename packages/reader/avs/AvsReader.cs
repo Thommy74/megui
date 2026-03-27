@@ -220,14 +220,43 @@ namespace MeGUI
 
         public int GetIntVariable(string name, int defaultValue)
         {
+            // Evaluate the variable name directly via avs_invoke so we can inspect the
+            // result type without routing through CheckError().  If the variable is not
+            // defined, avs_invoke returns an error-type value and sets an error in the
+            // environment; we consume the error via avs_get_error so that the stale
+            // error does not interfere with subsequent API calls.
+            const int AVS_VALUE_SIZE = 16;
+            IntPtr argMem = IntPtr.Zero;
+            IntPtr strPtr = IntPtr.Zero;
             try
             {
-                string s = _session.EvalString("string(" + name + ")");
-                if (!string.IsNullOrEmpty(s) && int.TryParse(s, out int v))
-                    return v;
-                return defaultValue;
+                argMem = Marshal.AllocHGlobal(AVS_VALUE_SIZE);
+                for (int i = 0; i < AVS_VALUE_SIZE; i++) Marshal.WriteByte(argMem, i, 0);
+                strPtr = Marshal.StringToHGlobalAnsi(name);
+                Marshal.WriteInt16(argMem, 0, (short)'s');
+                Marshal.WriteIntPtr(argMem, 8, strPtr);
+                var argVal = Marshal.PtrToStructure<AvsApi.AvsValue>(argMem);
+
+                var result = _lib.Invoke(_session.Env, "Eval", argVal, IntPtr.Zero);
+                // Consume any environment error without throwing, so callers are not
+                // affected when the variable is simply absent.
+                _lib.GetError(_session.Env);
+                try
+                {
+                    if (result.type == (short)'i') return result.i;
+                    return defaultValue;
+                }
+                finally
+                {
+                    _lib.ReleaseValue(result);
+                }
             }
             catch { return defaultValue; }
+            finally
+            {
+                if (strPtr != IntPtr.Zero) Marshal.FreeHGlobal(strPtr);
+                if (argMem != IntPtr.Zero) Marshal.FreeHGlobal(argMem);
+            }
         }
 
         public void ReadAudio(IntPtr buf, long start, int count)
