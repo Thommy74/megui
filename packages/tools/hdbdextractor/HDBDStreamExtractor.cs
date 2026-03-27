@@ -374,15 +374,21 @@ namespace MeGUI.packages.tools.hdbdextractor
                 if (row.Cells["StreamExtractAsComboBox"].Value == null)
                     throw new ApplicationException(string.Format("Specify an extraction type for stream:\r\n\n\t{0}: {1}", stream.Number, stream.Description));
 
+                string langName = row.Cells["languageDataGridViewTextBoxColumn"].Value?.ToString() ?? string.Empty;
+                string langCode;
+                string langSuffix = LanguageSelectionContainer.Languages.TryGetValue(langName, out langCode) && !string.IsNullOrEmpty(langCode)
+                    ? "_[" + langCode + "]"
+                    : string.Empty;
+
                 if (FolderSelection.Checked)
                     sb.Append(string.Format("{0}:\"{1}\" {2} ", stream.Number,
-                        System.IO.Path.Combine(FolderOutputTextBox.Text, string.Format("{0}F{1}_T{2}_{3} - {4}.{5}", filePrefix, 
-                        ((Feature)FeatureDataGridView.SelectedRows[0].DataBoundItem).Number, stream.Number, Extensions.GetStringValue(stream.Type), 
-                        row.Cells["languageDataGridViewTextBoxColumn"].Value, strExtension)), row.Cells["StreamAddOptionsTextBox"].Value).Trim());
+                        System.IO.Path.Combine(FolderOutputTextBox.Text, string.Format("{0}F{1}_T{2}_{3}{4}.{5}", filePrefix,
+                        ((Feature)FeatureDataGridView.SelectedRows[0].DataBoundItem).Number, stream.Number, Extensions.GetStringValue(stream.Type),
+                        langSuffix, strExtension)), row.Cells["StreamAddOptionsTextBox"].Value).Trim());
                 else
                     sb.Append(string.Format("{0}:\"{1}\" {2} ", stream.Number,
-                        System.IO.Path.Combine(FolderOutputTextBox.Text, string.Format("{0}T{1}_{2} - {3}.{4}", filePrefix, stream.Number,
-                        Extensions.GetStringValue(stream.Type), row.Cells["languageDataGridViewTextBoxColumn"].Value, strExtension)),
+                        System.IO.Path.Combine(FolderOutputTextBox.Text, string.Format("{0}T{1}_{2}{3}.{4}", filePrefix, stream.Number,
+                        Extensions.GetStringValue(stream.Type), langSuffix, strExtension)),
                         row.Cells["StreamAddOptionsTextBox"].Value).Trim());
 
                 if (stream.Type == eac3to.StreamType.Audio)
