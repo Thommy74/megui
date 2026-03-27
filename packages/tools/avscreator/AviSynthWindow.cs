@@ -947,14 +947,16 @@ namespace MeGUI
             }
             else
                 {
-                    using (MediaInfoFile x = new MediaInfoFile(strSourceFileName))
+                    MediaInfoFile x = new MediaInfoFile(strSourceFileName);
+                    videoLoaded = x.MediaInfoOK;
+                    if (x.MediaInfoOK)
                     {
-                        videoLoaded = x.MediaInfoOK;
-                        if (x.MediaInfoOK)
-                        {
-                            file = x;
-                            reader = null;
-                        }
+                        file = x;   // AviSynthWindow takes ownership; do NOT dispose x here
+                        reader = null;
+                    }
+                    else
+                    {
+                        x.Dispose();
                     }
                 }
             

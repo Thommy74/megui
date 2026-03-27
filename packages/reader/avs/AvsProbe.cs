@@ -127,30 +127,11 @@ namespace MeGUI
             bool fullRange = false;
             string colorSpace = GetColorSpace(pixelType);
 
-            // Video pitch — requires a decoded frame; use frame 0
+            // Note: frame decoding (avs_get_frame) is intentionally skipped here.
+            // The VideoPitch value is not used anywhere, and decoding frame 0 during
+            // initialisation is unnecessary overhead that can also leave an error in
+            // the AviSynth environment and interfere with subsequent API calls.
             int videoPitch = 0;
-            IntPtr frame0 = lib.GetFrame(clip, 0);
-            if (frame0 != IntPtr.Zero)
-            {
-                try
-                {
-                    videoPitch = lib.GetPitchP(frame0, AvsApi.DEFAULT_PLANE);
-
-                    // Frame properties: bit depth + colour range
-                    if (lib.HasFrameProps && lib.GetFramePropsRO != null && lib.PropGetInt != null && lib.PropGetType != null)
-                    {
-                        IntPtr map = lib.GetFramePropsRO(session.Env, frame0);
-                        if (map != IntPtr.Zero)
-                        {
-                            long range = ReadIntProp(lib, session.Env, map, "_ColorRange", 1);
-                            fullRange  = (range == 0);
-                            long cd    = ReadIntProp(lib, session.Env, map, "_ColorDepth", 0);
-                            if (cd > 0) bitDepth = (int)cd;
-                        }
-                    }
-                }
-                finally { lib.ReleaseVideoFrame(frame0); }
-            }
 
             // CPU flags
             int  cpuFlags   = lib.GetCpuFlags(session.Env);
