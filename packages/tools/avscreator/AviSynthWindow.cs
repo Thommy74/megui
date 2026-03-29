@@ -183,7 +183,10 @@ namespace MeGUI
             player?.Close();
             detector?.Stop();
             detector = null;
-			base.OnClosing (e);
+            file?.Dispose();
+            file = null;
+            reader = null;
+            base.OnClosing (e);
 		}
 		#endregion
 
