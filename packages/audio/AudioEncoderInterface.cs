@@ -253,7 +253,7 @@ namespace MeGUI
                 { 1539,   "Quad (side) (FL/FR/SL/SR)" },
                 { 59,     "Quad.1 (FL/FR/LFE/BL/BR)" },
                 { 55,     "5.0 (FL/FR/FC/BL/BR)" },
-                { 1543,   "5.0 (side) (FL/FR/FC/BL/BR)" },
+                { 1543,   "5.0 (side) (FL/FR/FC/SL/SR)" },
                 { 271,    "4.1 (FL/FR/FC/LFE/BC)" },
                 { 63,     "5.1 (FL/FR/FC/LFE//BL/BR)" },
                 { 1551,   "5.1 (side) (FL/FR/FC/LFE/SL/SR)" },
@@ -262,7 +262,8 @@ namespace MeGUI
                 { 311,    "Hexagonal (FL/FR/FC/BL/BR/BC)" },
                 { 1807,   "6.1 (FL/FR/FC/LFE/BC/SL/SR)" },
                 { 319,    "6.1 (back) (FL/FR/FC/LFE/BL/BR/BC)" },
-                { 1735,   "6.1 (front) (FL/FR/LFE/FLC/FRC/SL/SR)" },
+                { 1739,   "6.1 (front) (FL/FR/LFE/FLC/FRC/SL/SR)" },
+                { 1735,   "7.0 (front) (FL/FR/FC/FLC/FRC/SL/SR)" },
                 { 1599,   "7.1 (FL/FR/FC/LFE/BL/BR/SL/SR)" },
                 { 255,    "7.1 (wide) (FL/FR/FC/LFE/BL/BR/FLC/FRC)" },
                 { 1743,   "7.1 (wide-side) (FL/FR/FC/LFE/FLC/FRC/SL/SR)" },
@@ -674,7 +675,7 @@ namespace MeGUI
             bool Greater4GB = a.AudioSizeInBytes >= (uint.MaxValue - 68);
             bool WExtHeader = iChannelMask >= 0;
             uint HeaderSize = (uint)(WExtHeader ? 60 : 36);
-            int[] defmask = { 0, 4, 3, 11, 263, 1543, 1551, 1807, 1599, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[] defmask = { 0, 4, 3, 7, 51, 55, 63, 319, 1599, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
             if (Greater4GB && headerType == HeaderType.W64)
             {
