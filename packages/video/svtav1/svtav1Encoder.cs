@@ -53,7 +53,7 @@ namespace MeGUI
             
             if (line.StartsWith("Encoding:")) // status update
             {
-                int frameNumberStart = line.IndexOf(":", 4) + 2;
+                int frameNumberStart = line.IndexOf("m", 4) + 2;
                 int frameNumberEnd = line.IndexOf("/");
                 if (frameNumberStart > 0 && frameNumberEnd > 0 && frameNumberEnd > frameNumberStart)
                     if (base.setFrameNumber(line.Substring(frameNumberStart, frameNumberEnd - frameNumberStart).Trim()))
@@ -109,7 +109,7 @@ namespace MeGUI
             ///
 
             // Progress & Input
-            sb.Append("--progress 3 -i - ");
+            sb.Append("--progress 2 -i - ");
 
             // get number of frames to encode
             oSettingsHandler.getFrames(ref numberOfFrames);
