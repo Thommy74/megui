@@ -18,12 +18,13 @@
 // 
 // ****************************************************************************
 
-using System;
-using System.IO;
-using System.Globalization;
-using System.Text;
-
 using MeGUI.core.util;
+using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MeGUI
 {
@@ -50,18 +51,25 @@ namespace MeGUI
 
         public override void ProcessLine(string line, StreamType stream, ImageType oType)
         {
-            
-            if (line.StartsWith("Encoding:")) // status update
+            if (line.StartsWith("Encoding")) // status update
             {
-                int frameNumberStart = line.IndexOf("m", 4) + 2;
+                int frameNumberStart = line.IndexOf(":", 4) + 2;
                 int frameNumberEnd = line.IndexOf("/");
+
                 if (frameNumberStart > 0 && frameNumberEnd > 0 && frameNumberEnd > frameNumberStart)
+                {
+                    // Initialize NbFramesTotal
+                    if (Su.NbFramesTotal == 0)
+                    {
+                        var match = Regex.Match(line, @"Encoding:\s+\d+/(\d+)\s+Frames");
+                        if (match.Success)
+                            Su.NbFramesTotal = ulong.Parse(match.Groups[1].Value);
+                    }
+
                     if (base.setFrameNumber(line.Substring(frameNumberStart, frameNumberEnd - frameNumberStart).Trim()))
                         return;
-            } 
-            else if (FileUtil.RegExMatch(line, @"^Encoding: \d+/", true))
-                base.setFrameNumber(line.Substring(11, line.IndexOf("/") - 11));
-
+                }
+            }
             else if (line.StartsWith("frame=")) // status update for ffmpeg
             {
                 int frameNumberEnd = line.IndexOf("f", 6);
