@@ -18,7 +18,7 @@
 // 
 // ****************************************************************************
 
-namespace MeGUI.packages.video.svtav1psy
+namespace MeGUI.packages.video.svtav1
 {
     partial class svtav1ConfigurationPanel
     {

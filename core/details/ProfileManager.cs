@@ -35,7 +35,7 @@ using MeGUI.packages.video.x264;
 using MeGUI.packages.video.x265;
 using MeGUI.packages.video.xvid;
 using MeGUI.packages.video.ffv1;
-using MeGUI.packages.video.svtav1psy;
+using MeGUI.packages.video.svtav1;
 
 namespace MeGUI
 {

@@ -195,7 +195,7 @@ namespace MeGUI
                 return colorspace;
 
             // if avs+ is used add the available color spaces for ffmpeg+x264
-            if (!strEncoder.Equals("xvid") && !strEncoder.Equals("svtav1psy") && MainForm.Instance.Settings.AviSynthPlus)
+            if (!strEncoder.Equals("xvid") && !strEncoder.Equals("svtav1") && MainForm.Instance.Settings.AviSynthPlus)
                 arrCodecsAllowed.Add(AviSynthColorspace.YUV420P16);
             
             if (strEncoder.Equals("ffmpeg"))
@@ -244,7 +244,7 @@ namespace MeGUI
                     default: colorspace = AviSynthColorspace.YV12; break;
                 }
             }
-            else if (strEncoder.Equals("svtav1psy"))
+            else if (strEncoder.Equals("svtav1"))
             {
                 switch (iBit)
                 {

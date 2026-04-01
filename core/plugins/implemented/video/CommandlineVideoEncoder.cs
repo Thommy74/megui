@@ -131,7 +131,7 @@ namespace MeGUI
             else if (this is x264Encoder && (MainForm.Instance.Settings.IsMeGUIx64 || !MainForm.Instance.Settings.Usex64Tools))
                 strEncoder = "x264";
             else if (this is svtav1Encoder)
-                strEncoder = "svtav1psy";
+                strEncoder = "svtav1";
 
             AviSynthColorspace colorspace_target = AviSynthColorspaceHelper.GetConvertedColorspace(strEncoder, colorspace_original);
             int iBit = AviSynthColorspaceHelper.GetInputBitsDepth(colorspace_original);

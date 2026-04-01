@@ -31,7 +31,7 @@ using MeGUI.core.details.video;
 using MeGUI.core.gui;
 using MeGUI.core.plugins.interfaces;
 
-namespace MeGUI.packages.video.svtav1psy
+namespace MeGUI.packages.video.svtav1
 {
     public partial class svtav1ConfigurationPanel : MeGUI.core.details.video.VideoConfigurationPanel, Editable<svtav1Settings>
     {
