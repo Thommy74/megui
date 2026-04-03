@@ -201,6 +201,75 @@ namespace MeGUI
             set { _bMKVTrack = value; }
         }
 
+        /// <summary>
+        /// Resolves the file extension for the given codec string.
+        /// </summary>
+        public static string GetDemuxExtension(string codec, bool isMKVContainer)
+        {
+            string strCodec = String.Empty;
+
+            if (!String.IsNullOrEmpty(codec))
+                strCodec = codec.ToUpperInvariant();
+
+            if (isMKVContainer)
+            {
+                string[] arrCodec = codec.Split('/');
+                if (!String.IsNullOrEmpty(arrCodec[0]) && arrCodec[0].Length > 1 && arrCodec[0].Substring(1, 1).Equals("_"))
+                    arrCodec[0] = arrCodec[0].Substring(2);
+                strCodec = arrCodec[0].ToUpperInvariant();
+            }
+
+            if (strCodec.Contains("TRUEHD"))
+            {
+                if (strCodec.Contains("AC-3"))
+                    strCodec = "TRUEHD+AC3";
+                else
+                    strCodec = "TRUEHD";
+            }
+
+            switch (strCodec)
+            {
+                // audio
+                case "AC-3": return "ac3";
+                case "E-AC-3": return "eac3";
+                case "TRUEHD": return "thd";
+                case "TRUEHD+AC3": return "thd+ac3";
+                case "DTS": return "dts";
+                case "MP3": return "mp3";
+                case "MP2": return "mp2";
+                case "PCM": return "wav";
+                case "MS/ACM": return "wav";
+                case "VORBIS": return "ogg";
+                case "FLAC": return "flac";
+                case "REAL": return "ra";
+                case "AAC": return "aac";
+                case "AVS": return "avs";
+                case "OPUS": return "opus";
+
+                // subtitle
+                case "ASS": return "ass";
+                case "PGS": return "sup";
+                case "SRT": return "srt";
+                case "SSA": return "ssa";
+                case "TTXT": return "ttxt";
+                case "VOBSUB": return "idx";
+                case "WEBVTT": return "vtt";
+
+                // video
+                case "ASP": return "avi";
+                case "AVC": return "264";
+                case "HEVC": return "265";
+                case "HFYU": return "avi";
+                case "MPEG1": return "m1v";
+                case "MPEG2": return "m2v";
+                case "VC1": return "vc1";
+                case "VP8": return "ivf";
+                case "VP9": return "ivf";
+                case "AV1": return "ivf";
+                default: return strCodec + ".unknown";
+            }
+        }
+
         [XmlIgnore()]
         public String DemuxFileName
         {
@@ -209,75 +278,11 @@ namespace MeGUI
                 if (String.IsNullOrEmpty(_sourceFileName))
                     return null;
 
-                string strExtension = String.Empty;
-                string strCodec = String.Empty;
-                string strFileName = String.Empty;
-
-                if (!String.IsNullOrEmpty(_codec))
-                    strCodec = _codec.ToUpperInvariant();
-
-                if (IsMKVContainer())
-                {
-                    string[] arrCodec = new string[] { };
-                    arrCodec = _codec.Split('/');
-                    if (!String.IsNullOrEmpty(arrCodec[0]) && arrCodec[0].Substring(1, 1).Equals("_"))
-                        arrCodec[0] = arrCodec[0].Substring(2);
-                    strCodec = arrCodec[0].ToUpperInvariant();
-                }
-
-                if (strCodec.Contains("TRUEHD"))
-                {
-                    if (strCodec.Contains("AC-3"))
-                        strCodec = "TRUEHD+AC3";
-                    else
-                        strCodec = "TRUEHD";
-                }
-
-                switch (strCodec)
-                {
-                    // audio
-                    case "AC-3": strExtension = "ac3"; break;
-                    case "E-AC-3": strExtension = "eac3"; break;
-                    case "TRUEHD": strExtension = "thd"; break;
-                    case "TRUEHD+AC3": strExtension = "thd+ac3"; break;
-                    case "DTS": strExtension = "dts"; break;
-                    case "MP3": strExtension = "mp3"; break;
-                    case "MP2": strExtension = "mp2"; break;
-                    case "PCM": strExtension = "wav"; break;
-                    case "MS/ACM": strExtension = "wav"; break;
-                    case "VORBIS": strExtension = "ogg"; break;
-                    case "FLAC": strExtension = "flac"; break;
-                    case "REAL": strExtension = "ra"; break;
-                    case "AAC": strExtension = "aac"; break;
-                    case "AVS": strExtension = "avs"; break;
-                    case "OPUS": strExtension = "opus"; break;
-
-                    // subtitle
-                    case "ASS": strExtension = "ass"; break;
-                    case "PGS": strExtension = "sup"; break;
-                    case "SRT": strExtension = "srt"; break;
-                    case "SSA": strExtension = "ssa"; break;
-                    case "TTXT": strExtension = "ttxt"; break;
-                    case "VOBSUB": strExtension = "idx"; break;
-                    case "WEBVTT": strExtension = "vtt"; break;
-
-                    // video
-                    case "ASP": strExtension = "avi"; break;
-                    case "AVC": strExtension = "264"; break;
-                    case "HEVC": strExtension = "265"; break;
-                    case "HFYU": strExtension = "avi"; break;
-                    case "MPEG1": strExtension = "m1v"; break;
-                    case "MPEG2": strExtension = "m2v"; break;
-                    case "VC1": strExtension = "vc1"; break;
-                    case "VP8": strExtension = "ivf"; break;
-                    case "VP9": strExtension = "ivf"; break;
-                    case "AV1": strExtension = "ivf"; break;
-                    default: strExtension = strCodec + ".unknown"; break;
-                }
+                string strExtension = GetDemuxExtension(_codec, IsMKVContainer());
 
                 if (!strExtension.Equals("avs", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    strFileName = System.IO.Path.GetFileNameWithoutExtension(_sourceFileName) + " - ";
+                    string strFileName = System.IO.Path.GetFileNameWithoutExtension(_sourceFileName) + " - ";
                     if (_oneClickTrackNumber > 0)
                         strFileName += "[" + _oneClickTrackNumber + "]";
                     strFileName += "[" + _trackIndex + "]";
@@ -286,10 +291,10 @@ namespace MeGUI
                     if (_delay != 0)
                         strFileName += " Delay " + _delay + "ms";
                     strFileName += "." + strExtension;
+                    return strFileName;
                 }
                 else
-                    strFileName = System.IO.Path.GetFileName(_sourceFileName);
-                return strFileName;
+                    return System.IO.Path.GetFileName(_sourceFileName);
             }
         }
     }

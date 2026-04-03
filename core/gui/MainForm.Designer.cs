@@ -68,6 +68,7 @@ namespace MeGUI
             this.txtChangeLog = new System.Windows.Forms.RichTextBox();
             this.mnuMuxers = new System.Windows.Forms.MenuItem();
             this.mnuToolsAdaptiveMuxer = new System.Windows.Forms.MenuItem();
+            this.mnuDemuxer = new System.Windows.Forms.MenuItem();
             this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.mnuFile = new System.Windows.Forms.MenuItem();
             this.mnuFileOpen = new System.Windows.Forms.MenuItem();
@@ -353,6 +354,12 @@ namespace MeGUI
             this.mnuToolsAdaptiveMuxer.Text = "Adaptive Muxer";
             this.mnuToolsAdaptiveMuxer.Click += new System.EventHandler(this.mnuToolsAdaptiveMuxer_Click);
             // 
+            // mnuDemuxer
+            // 
+            this.mnuDemuxer.Index = 1;
+            this.mnuDemuxer.Text = "Demuxer";
+            this.mnuDemuxer.Click += new System.EventHandler(this.mnuToolsDemuxer_Click);
+            // 
             // mainMenu1
             // 
             this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
@@ -461,6 +468,7 @@ namespace MeGUI
             this.mnuTools.Index = 2;
             this.mnuTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.mnuMuxers,
+            this.mnuDemuxer,
             this.mnutoolsD2VCreator});
             this.mnuTools.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
             this.mnuTools.Text = "&Tools";
@@ -624,6 +632,7 @@ namespace MeGUI
         private System.Windows.Forms.MenuItem mnuFileImport;
         private System.Windows.Forms.MenuItem mnuFileExport;
         private System.Windows.Forms.MenuItem mnuToolsAdaptiveMuxer;
+        private System.Windows.Forms.MenuItem mnuDemuxer;
         private AudioEncodingComponent audioEncodingComponent1;
         private VideoEncodingComponent videoEncodingComponent1;
         private System.Windows.Forms.TabPage tabPage2;

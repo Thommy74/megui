@@ -31,6 +31,7 @@ using System.Xml.Serialization;
 using MeGUI.core.details;
 using MeGUI.core.gui;
 using MeGUI.core.plugins.interfaces;
+using MeGUI.packages.demuxer;
 using MeGUI.core.util;
 
 namespace MeGUI
@@ -828,6 +829,12 @@ namespace MeGUI
             amw.Show();
         }
 
+        private void mnuToolsDemuxer_Click(object sender, EventArgs e)
+        {
+            DemuxWindow dw = new DemuxWindow();
+            dw.Show();
+        }
+
         internal bool CloseSilent()
         {
             while (!this.profileManager.SaveProfiles())
@@ -920,6 +927,7 @@ namespace MeGUI
             toolsItems.Add(mnutoolsD2VCreator);
             toolsItems.Add(mnuMuxers);
             usedShortcuts.Add(mnuMuxers.Shortcut);
+            toolsItems.Add(mnuDemuxer);
 
             foreach (ITool tool in PackageSystem.Tools.Values)
             {
@@ -973,6 +981,8 @@ namespace MeGUI
             PackageSystem.JobProcessors.Register(tsMuxeR.Factory);
             PackageSystem.JobProcessors.Register(FFmpegMuxer.Factory);
             PackageSystem.JobProcessors.Register(MkvExtract.Factory);
+            PackageSystem.JobProcessors.Register(MP4BoxDemuxer.Factory);
+            PackageSystem.JobProcessors.Register(TsMuxeRDemuxer.Factory);
             PackageSystem.JobProcessors.Register(PgcDemux.Factory);
             PackageSystem.JobProcessors.Register(OneClickPostProcessing.Factory);
             PackageSystem.JobProcessors.Register(CleanupJobRunner.Factory);

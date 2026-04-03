@@ -85,11 +85,12 @@ namespace MeGUI
     /// in the TaggedJob class.
 	/// </summary>
 	[XmlInclude(typeof(VideoJob)), XmlInclude(typeof(AudioJob)), XmlInclude(typeof(MuxJob)), 
-    XmlInclude(typeof(D2VIndexJob)), XmlInclude(typeof(AviSynthJob)), XmlInclude(typeof(MP4FpsModJob)),
-    XmlInclude(typeof(SubtitleIndexJob)), XmlInclude(typeof(AudioSplitJob)), XmlInclude(typeof(AudioJoinJob)),
-    XmlInclude(typeof(CleanupJob)), XmlInclude(typeof(DGMIndexJob)), XmlInclude(typeof(FFMSIndexJob)),
-    XmlInclude(typeof(DGIIndexJob)), XmlInclude(typeof(HDStreamsExJob)), XmlInclude(typeof(PgcDemuxJob)),
-    XmlInclude(typeof(MkvExtractJob)), XmlInclude(typeof(OneClickPostProcessingJob)), XmlInclude(typeof(LSMASHIndexJob))]
+	XmlInclude(typeof(D2VIndexJob)), XmlInclude(typeof(AviSynthJob)), XmlInclude(typeof(MP4FpsModJob)),
+	XmlInclude(typeof(SubtitleIndexJob)), XmlInclude(typeof(AudioSplitJob)), XmlInclude(typeof(AudioJoinJob)),
+	XmlInclude(typeof(CleanupJob)), XmlInclude(typeof(DGMIndexJob)), XmlInclude(typeof(FFMSIndexJob)),
+	XmlInclude(typeof(DGIIndexJob)), XmlInclude(typeof(HDStreamsExJob)), XmlInclude(typeof(PgcDemuxJob)),
+	XmlInclude(typeof(MkvExtractJob)), XmlInclude(typeof(OneClickPostProcessingJob)), XmlInclude(typeof(LSMASHIndexJob)),
+	XmlInclude(typeof(MP4BoxDemuxJob)), XmlInclude(typeof(TsMuxeRDemuxJob))]
 	public abstract class Job
 	{
         #region important details

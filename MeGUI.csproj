@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -176,6 +176,9 @@
     <EmbeddedResource Include="packages\audio\ffthd\THDConfigurationPanel.resx">
       <DependentUpon>THDConfigurationPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="packages\demuxer\DemuxWindow.resx">
+      <DependentUpon>DemuxWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="packages\video\svtav1\svtav1ConfigurationPanel.resx">
       <DependentUpon>svtav1ConfigurationPanel.cs</DependentUpon>
@@ -371,6 +374,16 @@
       <DependentUpon>THDConfigurationPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="packages\audio\ffthd\THDSettings.cs" />
+    <Compile Include="packages\demuxer\DemuxWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="packages\demuxer\DemuxWindow.Designer.cs">
+      <DependentUpon>DemuxWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="packages\demuxer\mp4box\MP4BoxDemuxer.cs" />
+    <Compile Include="packages\demuxer\mp4box\MP4BoxDemuxJob.cs" />
+    <Compile Include="packages\demuxer\tsmuxer\TsMuxeRDemuxer.cs" />
+    <Compile Include="packages\demuxer\tsmuxer\TsMuxeRDemuxJob.cs" />
     <Compile Include="packages\muxer\ffmpeg\FFmpegMuxer.cs" />
     <Compile Include="packages\reader\lmash\lsmashReader.cs" />
     <Compile Include="packages\reader\mediainfo\wrapper\AudioTrack.cs" />
