@@ -164,6 +164,9 @@ namespace eac3to
                 case "E-AC3":
                 case "E-AC3 EX":
                 case "E-AC3 SURROUND":
+                case "E-AC3 (ATMOS)":
+                case "E-AC3 JOC":
+                case "E-AC3 JOC (ATMOS)":
                     audioStream.AudioType = AudioStreamType.EAC3;
                     break;
                 case "TRUEHD":
